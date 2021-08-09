@@ -41,7 +41,7 @@ $( document ).ready(function() {
 					let userTournaments = data.data.user.tournaments.nodes;
 					let tournamentContainer = $('.sgg-lite-user-tournaments');
 					$('.ssg-lite-userid').hide();
-					$('.sgg-lite-tournament-wrapper').removeClass('sgg-lite-tournament-wrapper')
+					$('.sgg-lite-tournament-wrapper').show();
 					for (var i = 0; i < 10; i++) {
 						var tournamentID = userTournaments[i].id;
 						var tournamentName = userTournaments[i].name;
