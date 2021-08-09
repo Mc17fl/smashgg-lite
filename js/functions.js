@@ -97,7 +97,7 @@ $( document ).ready(function() {
 				<h2 class="sgg-lite-events-title">Your Events</h2>
 			</div>
 		`);
-		
+		$('.sgg-lite-tournament-information-list').slideToggle(300);
 		let eventsContainer = tournamentButton.closest('.sgg-lite-tournament-container-outer').find(".sgg-lite-events-container");
 		for (let userEvent of informationArray.userEvents) {
 			userEvent.tourneyID = tournamentID;
