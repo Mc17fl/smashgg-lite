@@ -1,24 +1,31 @@
 var informationArray = [];
 const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
 $( document ).ready(function() {
+	function setUserObject(data){
+		informationArray.gamerTag = data.data.user.player.gamerTag
+	}
+
 	function getUserTournaments( user_id = "" ){
 		var data = JSON.stringify({
 			query: `
 			query User($slug: String!) {
 				user(slug: $slug){
-				tournaments (
-					query: { 
-					filter: { 
-						past:true,
-						upcoming:true
-					} 
-					}) 
-				{
-					nodes {
-					id
-					name
+					player{
+						gamerTag
 					}
-				}
+					tournaments (
+						query: { 
+						filter: { 
+							past:true,
+							upcoming:true
+						} 
+					}) 
+					{
+						nodes {
+						id
+						name
+						}
+					}
 				}
 			}
 			`,
@@ -37,6 +44,8 @@ $( document ).ready(function() {
 			}, success: function(data){
 				$('.sgg-lite-loading-wheel').addClass('loading-wheel-hide sgg-loading-wheel-centered');
 				if(typeof data.data !== 'undefined' && data.data.user !== null){
+					setUserObject(data);
+
 					$('.sgg-lite-user-details-wrapper').slideUp();
 					let userTournaments = data.data.user.tournaments.nodes;
 					$('.sgg-lite-userid').hide();
@@ -73,11 +82,9 @@ $( document ).ready(function() {
 
 	function showUserEvents(data = null){
 		informationArray.userEvents = data.participant.events;
-		console.log(informationArray.tourneyInfo);
 		let tournamentID = informationArray.tourneyInfo.id;
 		let tournamentButton = $("button[data-tournament-id='"+tournamentID+"']");
 		let formattedStartDate = new Date(informationArray.tourneyInfo.startAt*1000);
-		console.log(formattedStartDate)
 		let formattedEndDate = new Date(informationArray.tourneyInfo.endAt*1000);
 		formattedStartDate =  months[formattedStartDate.getMonth()] + " " + formattedStartDate.getDate() + ", " + formattedStartDate.getFullYear() + " " + formattedStartDate.getHours() + ":" + (formattedStartDate.getMinutes() < 10 ? "0":"") + formattedStartDate.getMinutes()
 		formattedEndDate =  months[formattedEndDate.getMonth()] + " " + formattedEndDate.getDate() + ", " + formattedEndDate.getFullYear() + " " + formattedEndDate.getHours() + ":" + (formattedEndDate.getMinutes() < 10 ? "0":"") + formattedEndDate.getMinutes()
@@ -97,7 +104,7 @@ $( document ).ready(function() {
 				<h2 class="sgg-lite-events-title">Your Events</h2>
 			</div>
 		`);
-		$('.sgg-lite-tournament-information-list').slideToggle(300);
+		tournamentButton.closest('.sgg-lite-tournament-container').find('.sgg-lite-tournament-information-list').slideToggle(300);
 		let eventsContainer = tournamentButton.closest('.sgg-lite-tournament-container-outer').find(".sgg-lite-events-container");
 		for (let userEvent of informationArray.userEvents) {
 			userEvent.tourneyID = tournamentID;
@@ -189,7 +196,7 @@ $( document ).ready(function() {
 					url(tab: "", relative: true)
 				  participants(query: {
 					filter: {
-					  gamerTag: "Matteo"
+					  gamerTag: "`+informationArray.gamerTag+`"
 					}
 				  }) {
 					nodes {
