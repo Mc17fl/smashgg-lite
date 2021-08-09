@@ -33,19 +33,18 @@ $( document ).ready(function() {
 				xhr.setRequestHeader("Authorization", "Bearer 96b64a3ff60d5c4a70614105bc8d6f94")
 				let loading_wheel_detached = $('.sgg-lite-loading-wheel').detach();
 				$(".sgg-lite-tournament-listing-button").after(loading_wheel_detached);
-				$('.sgg-lite-loading-wheel').removeClass('loading-wheel-hide');
+				loading_wheel_detached.removeClass('loading-wheel-hide');
 			}, success: function(data){
 				$('.sgg-lite-loading-wheel').addClass('loading-wheel-hide sgg-loading-wheel-centered');
 				if(typeof data.data !== 'undefined' && data.data.user !== null){
 					$('.sgg-lite-user-details-wrapper').slideUp();
 					let userTournaments = data.data.user.tournaments.nodes;
-					let tournamentContainer = $('.sgg-lite-user-tournaments');
 					$('.sgg-lite-userid').hide();
 					$('.sgg-lite-tournament-wrapper').show();
 					for (var i = 0; i < 10; i++) {
 						var tournamentID = userTournaments[i].id;
 						var tournamentName = userTournaments[i].name;
-						tournamentContainer.append(
+						$('.sgg-lite-user-tournaments').append(
 						`<div class="sgg-lite-tournament-container-outer">
 						<div class="sgg-lite-tournament-container">
 							<button class="sgg-lite-tournament" data-tournament-id="`+tournamentID+`">`
