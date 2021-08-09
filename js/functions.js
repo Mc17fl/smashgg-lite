@@ -1,6 +1,7 @@
 var informationArray = [];
+const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
 $( document ).ready(function() {
-	function getUserTournaments(){
+	function getUserTournaments( user_id = "" ){
 		var data = JSON.stringify({
 			query: `
 			query User($slug: String!) {
@@ -21,7 +22,7 @@ $( document ).ready(function() {
 				}
 			}
 			`,
-			variables: {"slug": "user/85b7dda7"}
+			variables: {"slug": "user/"+user_id}
 		});
 		$.ajax({
 			type: "POST",
@@ -30,40 +31,79 @@ $( document ).ready(function() {
 			contentType: "application/json;charset=utf-8",
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("Authorization", "Bearer 96b64a3ff60d5c4a70614105bc8d6f94")
+				let loading_wheel_detached = $('.sgg-lite-loading-wheel').detach();
+				$(".sgg-lite-tournament-listing-button").after(loading_wheel_detached);
+				$('.sgg-lite-loading-wheel').removeClass('loading-wheel-hide');
 			}, success: function(data){
-				if(typeof data.data !== 'undefined'){
+				$('.sgg-lite-loading-wheel').addClass('loading-wheel-hide sgg-loading-wheel-centered');
+				if(typeof data.data !== 'undefined' && data.data.user !== null){
+					$('.sgg-lite-user-details-wrapper').slideUp();
 					let userTournaments = data.data.user.tournaments.nodes;
 					let tournamentContainer = $('.sgg-lite-user-tournaments');
-					tournamentContainer.attr('data-tournament-list', JSON.stringify( userTournaments ) );
-					$('.sgg-lite-tournament-listing-button').hide();
+					$('.ssg-lite-userid').hide();
+					$('.sgg-lite-tournament-wrapper').removeClass('sgg-lite-tournament-wrapper')
 					for (var i = 0; i < 10; i++) {
 						var tournamentID = userTournaments[i].id;
 						var tournamentName = userTournaments[i].name;
-						tournamentContainer.append('<div class="sgg-lite-tournament-container"><button class="sgg-lite-tournament" data-tournament-id="'+tournamentID+'">'+tournamentName+'</button></div>');
+						tournamentContainer.append(
+						`<div class="sgg-lite-tournament-container-outer">
+						<div class="sgg-lite-tournament-container">
+							<button class="sgg-lite-tournament" data-tournament-id="`+tournamentID+`">`
+								+tournamentName+
+							`</button>
+						</div>`);
 					}
 				}else{
-					$('.sgg-lite-tournament-listing-button').hide();
-					alert("No Tournaments Found");
+					alert("Incorrect User ID/No Tournaments Found");
 				}
 			}
 		});
 	}
 
 	$('.sgg-lite-tournament-listing-button').click(function(){
-		getUserTournaments();
+		getUserTournaments($("#ssg-lite-userid-value").val());
 	});
+
+	$('#ssg-lite-userid-value').keypress(function (e) {
+		var key = e.which;
+		if(key == 13)  // the enter key code
+		 {
+			$('.sgg-lite-tournament-listing-button').click();
+		 }
+	   });   
 
 	function showUserEvents(data = null){
 		informationArray.userEvents = data.participant.events;
-		console.log(informationArray);
+		console.log(informationArray.tourneyInfo);
 		let tournamentID = informationArray.tourneyInfo.id;
 		let tournamentButton = $("button[data-tournament-id='"+tournamentID+"']");
-		tournamentButton.addClass('has-tourney-info');
-		let tournamentContainer = tournamentButton.closest('.sgg-lite-tournament-container');
-		for (const userEvent of informationArray.userEvents) {
-			tournamentContainer.append('<div class="sgg-lite-tournament-event">'+userEvent.name+'</div>');
-		}
+		let formattedStartDate = new Date(informationArray.tourneyInfo.startAt*1000);
+		console.log(formattedStartDate)
+		let formattedEndDate = new Date(informationArray.tourneyInfo.endAt*1000);
+		formattedStartDate =  months[formattedStartDate.getMonth()] + " " + formattedStartDate.getDate() + ", " + formattedStartDate.getFullYear() + " " + formattedStartDate.getHours() + ":" + (formattedStartDate.getMinutes() < 10 ? "0":"") + formattedStartDate.getMinutes()
+		formattedEndDate =  months[formattedEndDate.getMonth()] + " " + formattedEndDate.getDate() + ", " + formattedEndDate.getFullYear() + " " + formattedEndDate.getHours() + ":" + (formattedEndDate.getMinutes() < 10 ? "0":"") + formattedEndDate.getMinutes()
+		tournamentButton.addClass('has-tourney-info').hide();
+		tournamentButton.closest('.sgg-lite-tournament-container').append(`
+			<div>
+				<h2 class="ssg-lite-tournament-title"><a href="`+informationArray.tourneyInfo.url+`">`+tournamentButton.text()+`</a></h2>
+				<ul class="ssg-lite-tournament-information-list">
+					<li class="ssg-lite-tournament-information">Start: `+formattedStartDate+`</li>
+					<li class="ssg-lite-tournament-information">End: `+formattedEndDate+`</li>
+					<li class="ssg-lite-tournament-information">Rules: `+informationArray.tourneyInfo.rules+`</li>
+					<li class="ssg-lite-tournament-information">Number of Attendees: `+informationArray.tourneyInfo.numAttendees+`</li>
+
+				</ul>
+			</div>
+			<div class="ssg-lite-events-container">
+				<h2 class="ssg-lite-events-title">Your Events</h2>
+			</div>
+		`);
 		
+		let eventsContainer = tournamentButton.closest('.sgg-lite-tournament-container-outer').find(".ssg-lite-events-container");
+		for (let userEvent of informationArray.userEvents) {
+			userEvent.tourneyID = tournamentID;
+			eventsContainer.append('<button class="sgg-lite-tournament-event" data-event-information="'+JSON.stringify(userEvent)+'">'+userEvent.name+'</button>');
+		}
 	}
 
 	function tournamentHandler(data = null){
@@ -119,11 +159,13 @@ $( document ).ready(function() {
 			contentType: "application/json;charset=utf-8",
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("Authorization", "Bearer 96b64a3ff60d5c4a70614105bc8d6f94");
-			}, success: function(data){
-				if(typeof data.data !== 'undefined'){
+			},
+			success: function(data){
+				$('.sgg-lite-loading-wheel').addClass('loading-wheel-hide');
+				if(typeof data.data !== 'undefined' && data.data.participant.events !== null){
 					showUserEvents(data.data);
 				}else{
-					alert("No Events Found");
+					alert("No Events Found/Incorrect Participant ID");
 				}
 			}
 		});
@@ -168,6 +210,9 @@ $( document ).ready(function() {
 			contentType: "application/json;charset=utf-8",
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("Authorization", "Bearer 96b64a3ff60d5c4a70614105bc8d6f94")
+				let loading_wheel_detached = $('.sgg-lite-loading-wheel').detach();
+				$("button[data-tournament-id='"+tournamentID+"']").after(loading_wheel_detached);
+				loading_wheel_detached.removeClass('loading-wheel-hide');
 			}, success: function(data){
 				if(typeof data.data !== 'undefined'){
 					tournamentHandler(data.data);
