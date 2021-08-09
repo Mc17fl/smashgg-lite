@@ -4,19 +4,20 @@
 	<title>Smashgg Lite</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- <script type='text/javascript' src='C:\Users\Matteo\Documents\GitHub\smashgg-lite\js\functions.js'></script> -->
-    <script type='text/javascript' src='\smashgg-lite\js\functions.js?v=1.1'></script>
+    <script type='text/javascript' src='\smashgg-lite\js\functions.js?v=1.2'></script>
     <style>
         body{
             margin: 0;
         }
 
-        .smashgg-lite-wrapper{
+        .sgg-lite-wrapper{
             width: 100%;
             height: 100%;
         }
 
         .sgg-lite-wrapper-inner{
             text-align: center;
+            padding-bottom: 10vh;
         }
 
         .sgg-lite-user-details-wrapper{
@@ -28,14 +29,14 @@
             width: 50%;
         }
 
-        .ssg-lite-header-image{
+        .sgg-lite-header-image{
             margin: 0 auto;
             width: 100%;
             left: 0;
             top: 0;
         }
 
-        .ssg-lite-header-image-src{
+        .sgg-lite-header-image-src{
             position: relative;
             width: 100%;
         }
@@ -83,22 +84,22 @@
             margin: 0 auto;
         }
 
-        .ssg-lite-tournament-information-list{
+        .sgg-lite-tournament-information-list{
             list-style-type: none; /* Remove bullets */
             padding: 0; /* Remove padding */
             margin: 0; /* Remove margins */
         }
 
-        .ssg-lite-tournament-information{
+        .sgg-lite-tournament-information{
             padding: 10px;
         }
 
-        .ssg-lite-events-container{
+        .sgg-lite-events-container{
             margin-top: 15px;
             margin-bottom: 15px;
         }
 
-        .ssg-lite-events-title{
+        .sgg-lite-events-title{
             border-bottom: 1px solid black;
         }
 
@@ -126,8 +127,9 @@
             display: none;
         }
 
-        .ssg-lite-footer{
+        .sgg-lite-footer{
             margin: 0 auto;
+            position: fixed;
             width: 100%;
             left: 0;
             bottom: 0;
@@ -137,7 +139,7 @@
             margin-top: 4vh;
         }
 
-        .ssg-lite-footer-tag{
+        .sgg-lite-footer-tag{
             text-align: center;
         }
 
@@ -148,9 +150,9 @@
         <!-- <img id="loading-wheel" class="sgg-loading-wheel-image" src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\gif\loading-buffering.gif" alt="loading wheel" width="30" / draggable="false"> -->
         <img id="loading-wheel" class="sgg-loading-wheel-image" src="\smashgg-lite\gif\loading-buffering.gif" alt="loading wheel" width="30" draggable="false">
     </div>
-    <div class="ssg-lite-header-image">
-        <!-- <img class="ssg-lite-header-image-src" src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\ssg-lite-header-logo.jpeg" alt="SSG Lite Header logo" draggable="false"> -->
-        <img class="ssg-lite-header-image-src" src="\smashgg-lite\imgs\ssg-lite-header-logo.jpeg" alt="SSG Lite Header logo" draggable="false">
+    <div class="sgg-lite-header-image">
+        <!-- <img class="sgg-lite-header-image-src" src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\ssg-lite-header-logo.jpeg" alt="sgg Lite Header logo" draggable="false"> -->
+        <img class="sgg-lite-header-image-src" src="\smashgg-lite\imgs\ssg-lite-header-logo.jpeg" alt="sgg Lite Header logo" draggable="false">
     </div>
     <div class="sgg-lite-wrapper">
 
@@ -158,6 +160,10 @@
 
             <div class="sgg-lite-user-details-wrapper">
                 <h1>Enter Your User Id From SmashGG Profile Page Url</h1>
+                <div class="sgg-lite-userid">
+                    <input id="sgg-lite-userid-value" type="text" placeholder="User ID..." maxlength="10">
+                    <button class="sgg-lite-tournament-listing-button">Show My Tournaments</button>
+                </div>
                 <div class="sgg-lite-image-container sgg-lite-profile-settings-image">
                     <!-- <img src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\smashgg-profile-settings.png" width="300px" alt="profile settings" draggable="false"> -->
                     <img src="\smashgg-lite\imgs\smashgg-profile-settings.PNG" width="300px" alt="profile settings" draggable="false">
@@ -166,10 +172,7 @@
                     <!-- <img src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\smashgg-profile-url.png" width="400px" alt="profile settings" draggable="false"> -->
                     <img src="\smashgg-lite\imgs\smashgg-profile-url.PNG"  width="400px" alt="profile settings" draggable="false">
                 </div>
-                <div class="ssg-lite-userid">
-                    <input id="ssg-lite-userid-value" type="text" placeholder="User ID..." maxlength="10">
-                    <button class="sgg-lite-tournament-listing-button">Show My Tournaments</button>
-                </div>
+
             </div>
 
             <div class="sgg-lite-tournament-wrapper">
@@ -185,8 +188,8 @@
 
         </div>
     </div>
-    <footer class="ssg-lite-footer">
-        <p class="ssg-lite-footer-tag">&copy; Matteo Caglioti.</p>
+    <footer class="sgg-lite-footer">
+        <p class="sgg-lite-footer-tag">&copy; Matteo Caglioti.</p>
     </footer>
 </body>
 </html>

@@ -40,7 +40,7 @@ $( document ).ready(function() {
 					$('.sgg-lite-user-details-wrapper').slideUp();
 					let userTournaments = data.data.user.tournaments.nodes;
 					let tournamentContainer = $('.sgg-lite-user-tournaments');
-					$('.ssg-lite-userid').hide();
+					$('.sgg-lite-userid').hide();
 					$('.sgg-lite-tournament-wrapper').show();
 					for (var i = 0; i < 10; i++) {
 						var tournamentID = userTournaments[i].id;
@@ -61,10 +61,10 @@ $( document ).ready(function() {
 	}
 
 	$('.sgg-lite-tournament-listing-button').click(function(){
-		getUserTournaments($("#ssg-lite-userid-value").val());
+		getUserTournaments($("#sgg-lite-userid-value").val());
 	});
 
-	$('#ssg-lite-userid-value').keypress(function (e) {
+	$('#sgg-lite-userid-value').keypress(function (e) {
 		var key = e.which;
 		if(key == 13)  // the enter key code
 		 {
@@ -85,21 +85,21 @@ $( document ).ready(function() {
 		tournamentButton.addClass('has-tourney-info').hide();
 		tournamentButton.closest('.sgg-lite-tournament-container').append(`
 			<div>
-				<h2 class="ssg-lite-tournament-title"><a href="`+informationArray.tourneyInfo.url+`">`+tournamentButton.text()+`</a></h2>
-				<ul class="ssg-lite-tournament-information-list">
-					<li class="ssg-lite-tournament-information">Start: `+formattedStartDate+`</li>
-					<li class="ssg-lite-tournament-information">End: `+formattedEndDate+`</li>
-					<li class="ssg-lite-tournament-information">Rules: `+informationArray.tourneyInfo.rules+`</li>
-					<li class="ssg-lite-tournament-information">Number of Attendees: `+informationArray.tourneyInfo.numAttendees+`</li>
+				<h2 class="sgg-lite-tournament-title"><a href="`+informationArray.tourneyInfo.url+`">`+tournamentButton.text()+`</a></h2>
+				<ul class="sgg-lite-tournament-information-list">
+					<li class="sgg-lite-tournament-information">Start: `+formattedStartDate+`</li>
+					<li class="sgg-lite-tournament-information">End: `+formattedEndDate+`</li>
+					<li class="sgg-lite-tournament-information">Rules: `+informationArray.tourneyInfo.rules+`</li>
+					<li class="sgg-lite-tournament-information">Number of Attendees: `+informationArray.tourneyInfo.numAttendees+`</li>
 
 				</ul>
 			</div>
-			<div class="ssg-lite-events-container">
-				<h2 class="ssg-lite-events-title">Your Events</h2>
+			<div class="sgg-lite-events-container">
+				<h2 class="sgg-lite-events-title">Your Events</h2>
 			</div>
 		`);
 		
-		let eventsContainer = tournamentButton.closest('.sgg-lite-tournament-container-outer').find(".ssg-lite-events-container");
+		let eventsContainer = tournamentButton.closest('.sgg-lite-tournament-container-outer').find(".sgg-lite-events-container");
 		for (let userEvent of informationArray.userEvents) {
 			userEvent.tourneyID = tournamentID;
 			eventsContainer.append('<button class="sgg-lite-tournament-event" data-event-information="'+JSON.stringify(userEvent)+'">'+userEvent.name+'</button>');
