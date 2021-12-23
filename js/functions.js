@@ -5,6 +5,7 @@ $(document).ready(function() {
     if (localStorage.getItem('userIDs') != null) {
         let previousUserIDsContainer = $('.sgg-lite-previous-userids');
         for (const userID of JSON.parse(localStorage.getItem('userIDs'))) {
+            console.log("fuck")
             showPreviousUserButtons(userID, previousUserIDsContainer);
         }
         setTimeout(function() {
