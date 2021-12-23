@@ -8,13 +8,13 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 	<title>Smashgg Lite</title>
-
+    
     <link rel="shortcut icon" href="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\ssg-lite-header-logo-thumbnail.PNG">
     <link rel="shortcut icon" href="\smashgg-lite\imgs\ssg-lite-header-logo-thumbnail.PNG">
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <!-- <script type='text/javascript' src='C:\Users\Matteo\Documents\GitHub\smashgg-lite\js\functions.js'></script> -->
-    <script type='text/javascript' src='\smashgg-lite\js\functions.js?v=1.24'></script>
+    <script type='text/javascript' src='C:\Users\Matteo\Documents\GitHub\smashgg-lite\js\functions.js'></script>
+    <!-- <script type='text/javascript' src='\smashgg-lite\js\functions.js?v=1.24'></script> -->
     <style>
         body{
             margin: 0;
@@ -33,6 +33,15 @@
 
         .sgg-lite-user-details-wrapper{
             margin: 0 auto;
+        }
+
+        .sgg-lite-previous-userids{
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .sgg-lite-previous-users-information{
+            margin: 15px 10px;
         }
 
         .tournament-listing-lite{
@@ -62,7 +71,7 @@
         }
 
         .sgg-lite-image-container-inner{
-            width: 60%;
+            width: 50%;
             margin: 20px auto;
             border: 1px #16050E solid;
             border-radius: 30px;
@@ -106,7 +115,7 @@
             margin: 0 auto;
         }
 
-        .sgg-lite-tournament-information-list{
+        .sgg-information-list{
             display: none;
             list-style-type: none; /* Remove bullets */
             padding: 0; /* Remove padding */
@@ -114,12 +123,12 @@
         }
 
         .sgg-lite-tournament-information{
+            overflow-wrap: anywhere;
             padding: 10px;
         }
 
         .sgg-lite-events-container{
             margin-top: 15px;
-            margin-bottom: 15px;
         }
 
         .sgg-lite-events-title{
@@ -131,6 +140,12 @@
             margin: 0 auto;
             margin-top: 15px;
             margin-bottom: 15px;
+
+        }
+
+        .sgg-lite-tournament-event-list-container{
+            padding-top: 10px;
+            padding-bottom: 15px;
 
         }
 
@@ -169,14 +184,14 @@
     </style>
 </head>
 <body>
-    <div class="sgg-lite-loading-wheel  loading-wheel-hide">
-        <!-- <img id="loading-wheel" class="sgg-loading-wheel-image" src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\gif\loading-buffering.gif" alt="loading wheel" width="30" / draggable="false"> -->
-        <img id="loading-wheel" class="sgg-loading-wheel-image" src="\smashgg-lite\gif\loading-buffering.gif" alt="loading wheel" width="30" draggable="false">
+    <div class="sgg-lite-loading-wheel  loading-wheel-hide sgg-loading-wheel-centered">
+        <img id="loading-wheel" class="sgg-loading-wheel-image" src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\gif\loading-buffering.gif" alt="loading wheel" width="30" / draggable="false">
+        <!-- <img id="loading-wheel" class="sgg-loading-wheel-image" src="\smashgg-lite\gif\loading-buffering.gif" alt="loading wheel" width="30" draggable="false"> -->
     </div>
     <div class="sgg-lite-header-image">
         <div class="sgg-lite-header-image-inner">
-            <!-- <img class="sgg-lite-header-image-src" src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\ssg-lite-header-logo.PNG" alt="sgg Lite Header logo" draggable="false"> -->
-            <img class="sgg-lite-header-image-src" src="\smashgg-lite\imgs\ssg-lite-header-logo.PNG" alt="sgg Lite Header logo" draggable="false">
+            <img class="sgg-lite-header-image-src" src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\ssg-lite-header-logo.PNG" alt="sgg Lite Header logo" draggable="false">
+            <!-- <img class="sgg-lite-header-image-src" src="\smashgg-lite\imgs\ssg-lite-header-logo.PNG" alt="sgg Lite Header logo" draggable="false"> -->
         </div>
     </div>
     <div class="sgg-lite-wrapper">
@@ -184,23 +199,27 @@
         <div class="sgg-lite-wrapper-inner">
 
             <div class="sgg-lite-user-details-wrapper">
-                    <div class="sgg-lite-userid">
-                        <input id="sgg-lite-userid-value" type="text" placeholder="User ID..." maxlength="10">
-                        <button class="sgg-lite-tournament-listing-button">Show My Tournaments</button>
-                    </div>
+                <div class="sgg-lite-previous-userids">
+                    <h2 style="margin-top: 0;">Load Previous User's Information</h2>
+                </div>
+                <div class="sgg-lite-userid">
+                    <h2>Load New User's Information</h2>
+                    <input id="sgg-lite-userid-value" type="text" placeholder="User ID..." maxlength="10">
+                    <button class="sgg-lite-tournament-listing-button">Show My Tournaments</button>
+                </div>
                 <div class="sgg-lite-image-container-inner">
 
                     <div class="sgg-lite-image-container sgg-lite-profile-settings-image">
 
-                            <h2>How To Get Your User ID</h2>
-                            <!-- <img src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\smashgg-profile-settings.png" width="300px" alt="profile settings" draggable="false"> -->
-                            <img src="\smashgg-lite\imgs\smashgg-profile-settings.PNG" width="300px" alt="profile settings" draggable="false">
+                            <h1>How To Get Your User ID</h1>
+                            <img src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\smashgg-profile-settings.png" width="300px" alt="profile settings" draggable="false">
+                            <!-- <img src="\smashgg-lite\imgs\smashgg-profile-settings.PNG" width="300px" alt="profile settings" draggable="false"> -->
 
                     </div>
 
                     <div class="sgg-lite-image-container sgg-lite-profile-settings-url-image">
-                        <!-- <img src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\smashgg-profile-url.png" width="400px" alt="profile settings" draggable="false"> -->
-                        <img src="\smashgg-lite\imgs\smashgg-profile-url.PNG"  width="400px" alt="profile settings" draggable="false">
+                        <img src="C:\Users\Matteo\Documents\GitHub\smashgg-lite\imgs\smashgg-profile-url.png" width="400px" alt="profile settings" draggable="false">
+                        <!-- <img src="\smashgg-lite\imgs\smashgg-profile-url.PNG"  width="400px" alt="profile settings" draggable="false"> -->
                     </div>
                 </div>
             </div>
