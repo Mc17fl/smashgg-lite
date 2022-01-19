@@ -1,4 +1,7 @@
 # smashgg-lite
+
+<img src="/imgs/ssg-lite-header-logo-thumbnail.PNG" alt=""> <br>
+
 My own version of smashgg which cuts back on 90% of functionality to give a bare bones version that is faster than the proprietary smashgg <br>
 
 Site being hosted on: https://mc17fl.github.io/smashgg-lite/
