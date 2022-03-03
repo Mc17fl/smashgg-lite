@@ -1,4 +1,4 @@
-# smashgg-lite
+# smashgg lite
 
 <p align="center">
   <img src="/imgs/ssg-lite-header-logo-thumbnail.PNG" alt="">
